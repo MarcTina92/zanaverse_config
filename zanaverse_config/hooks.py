@@ -19,7 +19,6 @@ required_apps = ["frappe"]
 fixtures = [
     {"dt": "Website Settings"},
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
-    {"dt": "Navbar Item",  "filters": [["item_label", "like", "Zana%"]]},
 ]
 
 # Optional: make portal default_role safe if role exists
