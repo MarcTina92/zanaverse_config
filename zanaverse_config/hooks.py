@@ -18,11 +18,8 @@ required_apps = ["frappe"]
 # Branding-only fixtures
 fixtures = [
     {"dt": "Website Settings"},
-    {"dt": "Portal Settings"},
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
     {"dt": "Navbar Item",  "filters": [["item_label", "like", "Zana%"]]},
-    {"dt": "Letter Head",  "filters": [["name", "like", "Zana%"]]},
-    {"dt": "Web Page",     "filters": [["name", "in", ["Home","home"]]]},
 ]
 
 # Optional: make portal default_role safe if role exists
