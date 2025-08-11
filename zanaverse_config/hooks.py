@@ -11,4 +11,5 @@ fixtures = [
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
 ]
 
-after_migrate = ["zanaverse_config.install.apply_branding"]
+after_install = "zanaverse_config.install.apply_branding"
+after_migrate = "zanaverse_config.install.apply_branding"
