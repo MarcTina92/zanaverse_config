@@ -1,0 +1,19 @@
+/* Force the Desk splash (preloader) to use our logo */
+.splash .app-logo {
+  background-image: url("/assets/zanaverse_config/images/logo.svg?v=2") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+}
+
+/* Hide any default <img> the splash might render */
+.splash .app-logo img,
+.splash img.app-logo {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Belt-and-braces for navbar logo if something still points to frappe */
+.navbar .navbar-brand img[src*="/assets/frappe/"] {
+  content: url("/assets/zanaverse_config/images/logo.svg?v=2");
+}
