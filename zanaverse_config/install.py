@@ -1,76 +1,71 @@
 # zanaverse_config/install.py
-from __future__ import annotations
-
 import frappe
-from frappe.installer import update_site_config
 
-
-def asbool(v) -> bool:
-    if isinstance(v, bool):
-        return v
-    if isinstance(v, (int, float)):
-        return bool(v)
-    if isinstance(v, str):
-        return v.strip().lower() in {"1", "true", "yes", "on"}
+def asbool(v):
+    if isinstance(v, bool): return v
+    if isinstance(v, (int, float)): return bool(v)
+    if isinstance(v, str): return v.strip().lower() in {"1", "true", "yes", "on"}
     return False
 
+def _logo_path() -> str:
+    # Single source of truth for your logo everywhere
+    return "/assets/zanaverse_config/images/zv-logo.png?v=2"
 
-def apply_branding(force: bool | None = None):
-    """
-    Apply Zanaverse default branding to Website Settings.
-
-    Behavior:
-      - If `force` is True  -> always overwrite (SaaS/default).
-      - If `force` is False -> only seed empty fields (client can customize).
-      - If `force` is None  -> read site config key `zanaverse_branding_locked`
-                               (defaults True) to decide.
-    """
+def _write_branding(*, force: bool) -> bool:
+    """Write branding fields. If force=False, only seed when empty."""
     ws = frappe.get_doc("Website Settings", "Website Settings")
-
-    if force is None:
-        locked = asbool(frappe.get_conf().get("zanaverse_branding_locked", True))
-    else:
-        locked = bool(force)
-
     changed = False
 
     def _set(field: str, value: str):
         nonlocal changed
-        # If locked, always write. If unlocked, only seed when field is empty.
-        current = ws.get(field)
-        if locked or not current:
-            if current != value:
+        if force or not ws.get(field):
+            if ws.get(field) != value:
                 ws.set(field, value)
                 changed = True
 
-    # ---- Zanaverse defaults ----
-    _set("app_name", "Zanaverse")
-    _set("app_logo", "/assets/zanaverse_config/images/logo.svg?v=1")
-    _set("footer_logo", "/assets/zanaverse_config/images/footer-logo.svg?v=1")
-    _set("favicon", "/assets/zanaverse_config/images/favicon.png?v=4")
-    _set("banner_image", "/assets/zanaverse_config/images/banner.png?v=1")
-    _set(
-        "brand_html",
-        '<img src="/assets/zanaverse_config/images/logo.svg?v=1" '
-        'alt="Zanaverse" style="height:22px;vertical-align:middle" />',
-    )
+    logo = _logo_path()
+    brand_html = f'<img src="{logo}" alt="Zanaverse" style="height:22px;vertical-align:middle">'
+
+    # Keep this list tight: only Website Settings branding-related fields
+    _set("app_logo", logo)
+    _set("footer_logo", logo)
+    _set("favicon", logo)
+    _set("banner_image", logo)
+    _set("splash_image", logo)
+    _set("brand_html", brand_html)
 
     if changed:
         ws.save(ignore_permissions=True)
         frappe.db.commit()
+    return changed
 
+def apply_branding() -> dict:
+    """Run on migrate (and manually). Enforce when locked; otherwise only seed empties."""
+    locked = asbool(frappe.get_conf().get("zanaverse_branding_locked", True))
+    changed = _write_branding(force=locked)
     return {"changed": changed, "force": locked}
 
-
-def apply_branding_first_time():
+def apply_branding_first_time() -> dict:
     """
-    One-time brand enforcement on first install.
-    Sets a site flag so subsequent installs/migrates don’t re-force unless
-    `zanaverse_branding_locked` is True.
+    Run once after install to guarantee an initial Zanaverse brand.
+    Marks a site flag so we don’t reseed again unnecessarily.
     """
-    if asbool(frappe.get_conf().get("zanaverse_branding_initialized")):
-        return {"initialized": True, "skipped": True}
+    conf = frappe.get_conf() or {}
+    init_key = "zanaverse_branding_initialized"
+    if asbool(conf.get(init_key)):
+        return {"initialized": False, "changed": False, "force": False}
 
-    out = apply_branding(force=True)
-    update_site_config("zanaverse_branding_initialized", True)
-    return {"initialized": True, **(out or {})}
+    changed = _write_branding(force=True)
+
+    # Persist the initialization flag in site_config.json
+    try:
+        from frappe.installer import update_site_config
+    except Exception:
+        update_site_config = None
+    if update_site_config:
+        update_site_config(init_key, True)
+    else:
+        # Safe fallback: write directly if needed
+        frappe.conf.update({init_key: True})
+
+    return {"initialized": True, "changed": changed, "force": True}
