@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "bench: watch",
+      "type": "shell",
+      "command": "bench watch",
+      "options": { "cwd": "${workspaceFolder}/../.." }
+    },
+    {
+      "label": "bench: restart",
+      "type": "shell",
+      "command": "bench restart",
+      "options": { "cwd": "${workspaceFolder}/../.." }
+    },
+    {
+      "label": "bench: migrate (dev-zanaschools)",
+      "type": "shell",
+      "command": "bench --site dev-zanaschools.localhost migrate",
+      "options": { "cwd": "${workspaceFolder}/../.." }
+    },
+    {
+      "label": "bench: export fixtures (zanaverse_config)",
+      "type": "shell",
+      "command": "bench --site dev-zanaschools.localhost export-fixtures --app zanaverse_config",
+      "options": { "cwd": "${workspaceFolder}/../.." }
+    }
+  ]
+}
