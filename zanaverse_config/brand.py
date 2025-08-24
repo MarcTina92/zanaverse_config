@@ -1,7 +1,9 @@
 import frappe
 
-# One stable fallback inside your app (matches what you just set)
+BRAND_NAME   = "Zanaverse"
+# keep your existing asset path
 DEFAULT_LOGO = "/assets/zanaverse_config/images/zv-logo.png?v=2"
+
 
 def _ws():
     try:
@@ -9,30 +11,60 @@ def _ws():
     except Exception:
         return None
 
-def _current_logo():
+
+def _brand_name():
     ws = _ws()
+    return (ws and (ws.app_name or ws.brand_html)) or BRAND_NAME
+
+
+def _logo_url():
+    ws = _ws()
+    # prefer explicit app_logo, then splash, then favicon, then default
     return (ws and (ws.app_logo or ws.splash_image or ws.favicon)) or DEFAULT_LOGO
 
-# ---- Hooks ----
+
+# -------------------- hooks --------------------
+
 def update_website_context(context):
     """
-    Ensures all website templates (login, update-password, message, error, etc.)
-    receive the same logo + favicon.
+    Ensures website templates (login, update-password, message, error, etc.)
+    receive consistent branding.
     """
-    logo = _current_logo()
-    context["logo"] = logo
-    context["favicon"] = logo
-    # optional extras if you want:
+    logo = _logo_url()
+    brand = _brand_name()
+
+    # Common keys used by Website / Navbar / templates
+    context["app_name"] = brand
+    context["brand_html"] = f'<img src="{logo}" alt="{brand}" style="height:22px;vertical-align:middle">'
+    context["logo"]         = logo
+    context["favicon"]      = logo
     context["splash_image"] = logo
     context["banner_image"] = logo
 
+
 def app_logo_url():
-    """Desk (top-left) logo at boot."""
-    return _current_logo()
+    """Logo shown in the Desk navbar (top-left)."""
+    return _logo_url()
+
 
 def brand_html():
-    """Fallback HTML for places that render inline brand markup."""
-    ws = _ws()
-    app = (ws and ws.app_name) or "Zanaverse"
-    logo = _current_logo()
-    return f'<img src="{logo}" alt="{app}" style="height:22px;vertical-align:middle">'
+    """Inline brand markup fallback (OK to keep your <img>-based variant)."""
+    brand = _brand_name()
+    logo  = _logo_url()
+    return f'<img src="{logo}" alt="{brand}" style="height:22px;vertical-align:middle">'
+
+
+def boot_session(bootinfo):
+    """
+    Runs during Desk boot. Set authoritative values here so the SPA (incl. Setup Wizard)
+    uses 'Zanaverse' everywhere without needing client-side hacks.
+    """
+    brand = _brand_name()
+    logo  = _logo_url()
+
+    bootinfo.app_name   = brand          # drives document.title + navbar
+    bootinfo.brand_html = brand          # additional consumers
+    # harmless extras some themes consume:
+    bootinfo.app_logo   = logo
+    bootinfo.favicon    = logo
+    return bootinfo
