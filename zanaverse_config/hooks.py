@@ -7,7 +7,24 @@ app_email = "info@marctinaconsultancy.com"
 app_license = "mit"
 
 # Ship only what you need as fixtures (theme is fine)
-fixtures = [{"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]}]
+fixtures = [
+    # Website Theme (already present)
+    {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
+
+    # Workspaces you’ve curated
+    {"dt": "Workspace", "filters": [["name", "in", [
+        "Zanaverse Home", "Admin"   # add others you want to preserve
+    ]]]},
+
+    # Optional: supporting UI elements (only if you touched them)
+    {"dt": "Navbar Settings"},
+    {"dt": "Website Settings"},
+
+    # Optional: dashboards/cards referenced inside your workspaces
+    {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
+    {"dt": "Dashboard", "filters": [["module", "=", "Zanaverse Config"]]},
+    {"dt": "Dashboard Chart", "filters": [["module", "=", "Zanaverse Config"]]},
+]
 
 # Dynamic branding (via helpers below)
 app_logo_url = "zanaverse_config.brand.app_logo_url"
