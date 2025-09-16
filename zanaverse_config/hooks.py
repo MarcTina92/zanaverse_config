@@ -30,4 +30,4 @@ website_context = {
 
 # Tiny client nudge for SPA routes / setup wizard (keeps things in sync)
 # You can remove this later if you find boot_session alone is sufficient.
-app_include_js = ["assets/zanaverse_config/js/brand-title.js"]
+
