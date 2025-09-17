@@ -90,7 +90,7 @@
     "route": "https://frappe.io/support"
    }
   ],
-  "modified": "2025-09-17 10:16:32.974858",
+  "modified": "2025-09-17 12:04:53.745825",
   "name": "Navbar Settings",
   "settings_dropdown": [
    {
@@ -108,7 +108,7 @@
    {
     "action": "frappe.ui.toolbar.route_to_user()",
     "condition": null,
-    "hidden": 1,
+    "hidden": 0,
     "is_standard": 1,
     "item_label": "My Settings",
     "item_type": "Action",
@@ -132,7 +132,7 @@
    {
     "action": "frappe.ui.toolbar.clear_cache()",
     "condition": null,
-    "hidden": 1,
+    "hidden": 0,
     "is_standard": 1,
     "item_label": "Reload",
     "item_type": "Action",
@@ -204,7 +204,7 @@
    {
     "action": "frappe.app.logout()",
     "condition": null,
-    "hidden": 1,
+    "hidden": 0,
     "is_standard": 1,
     "item_label": "Log out",
     "item_type": "Action",
