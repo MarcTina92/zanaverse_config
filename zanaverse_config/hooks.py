@@ -9,16 +9,15 @@ app_license = "mit"
 # Ship only what you need as fixtures (theme is fine)
 fixtures = [
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
-    # Keep your module-scoped curated workspaces
-    {"dt": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},
-    # And explicitly include stock Home even if its module is 'Setup'
-    {"dt": "Workspace", "filters": [["name", "=", "Home"]]},
+    {"dt": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},  # curated by module
+    {"dt": "Workspace", "filters": [["name", "=", "Home"]]},               # explicitly include stock Home
     {"dt": "Navbar Settings"},
     {"dt": "Website Settings"},
     {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard Chart", "filters": [["module", "=", "Zanaverse Config"]]},
 ]
+
 
 # Dynamic branding (via helpers below)
 app_logo_url = "zanaverse_config.brand.app_logo_url"
