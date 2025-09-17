@@ -74,7 +74,7 @@ def boot_session(bootinfo):
 
     # Some builds look for brand_html as *text*; others accept markup.
     # Provide both, plus app_logo_url/app_logo for wide compatibility.
-    try: bootinfo.brand_html = brand  # safe text
+    try: bootinfo.brand_html = _brand_html_markup(logo, brand)  # safe text
     except Exception: pass
     try: bootinfo.app_logo_url = logo
     except Exception: pass
