@@ -97,11 +97,24 @@ def _write_branding(*, force: bool) -> bool:
     return changed
 
 def apply_email_footer(force=True):
-    """Set a simple global email footer."""
+    """Set a simple global email footer, but only on stacks that support it."""
+    try:
+        meta = frappe.get_meta("System Settings")
+    except Exception:
+        return {"changed": False, "skipped": True, "reason": "no System Settings meta"}
+
+    # older/newer stacks may not have this field
+    has_field = getattr(meta, "has_field", None)
+    if has_field and not meta.has_field("email_footer"):
+        return {"changed": False, "skipped": True, "reason": "email_footer field missing"}
+
     try:
         ss = frappe.get_single("System Settings")
     except Exception:
-        return {"changed": False, "skipped": True}
+        return {"changed": False, "skipped": True, "reason": "cannot load System Settings"}
+
+    if not hasattr(ss, "email_footer"):
+        return {"changed": False, "skipped": True, "reason": "email_footer attr missing"}
 
     footer_html = """
     <div style="color:#6b7280;font-size:12px;line-height:1.6;margin-top:12px">
@@ -111,15 +124,17 @@ def apply_email_footer(force=True):
     """.strip()
 
     changed = False
-    if force or (not getattr(ss, "email_footer", None)):
-        if ss.email_footer != footer_html:
+    current = getattr(ss, "email_footer", None)
+    if force or not current:
+        if current != footer_html:
             ss.email_footer = footer_html
             changed = True
 
     if changed:
         ss.save(ignore_permissions=True)
         frappe.db.commit()
-    return {"changed": changed}
+    return {"changed": changed, "skipped": False}
+
 # ---------------------- public entry points ----------------------
 
 def apply_branding() -> dict:
