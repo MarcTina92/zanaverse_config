@@ -9,7 +9,10 @@ app_license = "mit"
 # Ship only what you need as fixtures (theme is fine)
 fixtures = [
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
-    {"dt": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},  # <- no hardcoded names
+    # Keep your module-scoped curated workspaces
+    {"dt": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},
+    # And explicitly include stock Home even if its module is 'Setup'
+    {"dt": "Workspace", "filters": [["name", "=", "Home"]]},
     {"dt": "Navbar Settings"},
     {"dt": "Website Settings"},
     {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
