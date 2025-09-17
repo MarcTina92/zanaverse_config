@@ -1,0 +1,22 @@
+{% extends "templates/web.html" %}
+
+{% block title %}Zanaverse — Sign in{% endblock %}
+
+{% block page_content %}
+<div class="zv-login-wrap">
+  <div class="zv-login-card">
+    <img src="/assets/zanaverse_config/images/zv-logo.png?v=2" alt="Zanaverse" class="zv-logo">
+    <h1 class="zv-h1">Welcome</h1>
+    {{ frappe.render_template("templates/includes/login/login.html", dict()) }}
+  </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+.zv-login-wrap{display:flex;min-height:70vh;align-items:center;justify-content:center;padding:2rem}
+.zv-login-card{max-width:420px;width:100%;background:#fff;border-radius:12px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.zv-logo{height:36px;margin-bottom:10px}
+.zv-h1{font-size:1.25rem;margin:0 0 1rem}
+</style>
+{% endblock %}
