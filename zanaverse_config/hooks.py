@@ -18,6 +18,13 @@ fixtures = [
     {"dt": "Dashboard Chart", "filters": [["module", "=", "Zanaverse Config"]]},
 ]
 
+fixtures += [{
+    "dt": "Translation",
+    "filters": [
+        ["language", "=", "en"],
+        ["source_text", "in", ["ERPNext", "Frappe HR", "Helpdesk", "Insights"]],
+    ],
+}]
 
 # Dynamic branding (via helpers below)
 app_logo_url = "zanaverse_config.brand.app_logo_url"

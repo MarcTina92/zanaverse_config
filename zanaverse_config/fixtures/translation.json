@@ -1,0 +1,54 @@
+[
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-09-17 20:58:52.882226",
+  "name": "dj2259fvn2",
+  "source_text": "ERPNext",
+  "translated_text": "ZanaERP"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-09-17 20:58:52.891905",
+  "name": "dj2nkqa071",
+  "source_text": "Frappe HR",
+  "translated_text": "ZanaHR"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-09-17 20:58:52.894704",
+  "name": "dj2gt6m0pp",
+  "source_text": "Helpdesk",
+  "translated_text": "ZanaSupport"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-09-17 20:58:52.896909",
+  "name": "dj2rv0j4d8",
+  "source_text": "Insights",
+  "translated_text": "Zanalytics"
+ }
+]
