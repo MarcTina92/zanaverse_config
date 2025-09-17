@@ -9,9 +9,7 @@ app_license = "mit"
 # Ship only what you need as fixtures (theme is fine)
 fixtures = [
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
-    {"dt": "Workspace", "filters": [["name", "in", [
-        "Zanaverse Home", "Admin", "Home"  
-    ]]]},
+    {"dt": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},  # <- no hardcoded names
     {"dt": "Navbar Settings"},
     {"dt": "Website Settings"},
     {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
