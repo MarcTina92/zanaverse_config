@@ -18,32 +18,43 @@ def _logo_path() -> str:
 # Add any baseline workspaces you always ship
 CURATED_WORKSPACES = ["Home", "Zanaverse Home", "Admin"]
 
+# zanaverse_config/install.py
 def _tag_workspace_module():
     """
     Ensure curated Workspaces have module='Zanaverse Config'.
-    Idempotent: only writes when a value differs.
-    Gracefully skips if 'module' field doesn't exist on this build.
+    Idempotent and robust: will fall back to db.set_value if needed.
     """
     updated = []
     if not frappe.db.table_exists("Workspace"):
         return updated
 
-    meta = frappe.get_meta("Workspace")
-    has_module_field = getattr(meta, "has_field", None) and meta.has_field("module")
+    try:
+        meta = frappe.get_meta("Workspace")
+        # be defensive: treat as present unless we can prove otherwise
+        has_module_field = True
+        if getattr(meta, "has_field", None):
+            has_module_field = meta.has_field("module")
+    except Exception:
+        has_module_field = True
 
     for name in CURATED_WORKSPACES:
         if not frappe.db.exists("Workspace", name):
             continue
-        w = frappe.get_doc("Workspace", name)
 
-        # ensure label/title are never empty (defensive)
-        w.label = w.label or name
-        w.title = w.title or w.label
-
-        if has_module_field and getattr(w, "module", None) != "Zanaverse Config":
-            w.module = "Zanaverse Config"
-            w.save(ignore_permissions=True)
-            updated.append(name)
+        if has_module_field:
+            current = frappe.get_value("Workspace", name, "module")
+            if current != "Zanaverse Config":
+                try:
+                    # try the clean path first
+                    w = frappe.get_doc("Workspace", name)
+                    w.label = w.label or name
+                    w.title = w.title or w.label
+                    w.module = "Zanaverse Config"
+                    w.save(ignore_permissions=True)
+                except Exception:
+                    # fall back to direct write if save path rejects it
+                    frappe.db.set_value("Workspace", name, "module", "Zanaverse Config", update_modified=False)
+                updated.append(name)
 
     if updated:
         frappe.db.commit()
