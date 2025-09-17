@@ -90,13 +90,13 @@
     "route": "https://frappe.io/support"
    }
   ],
-  "modified": "2025-09-17 12:04:53.745825",
+  "modified": "2025-09-17 17:03:31.703335",
   "name": "Navbar Settings",
   "settings_dropdown": [
    {
     "action": null,
     "condition": null,
-    "hidden": 1,
+    "hidden": 0,
     "is_standard": 1,
     "item_label": "My Profile",
     "item_type": "Route",
@@ -108,7 +108,7 @@
    {
     "action": "frappe.ui.toolbar.route_to_user()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "My Settings",
     "item_type": "Action",
