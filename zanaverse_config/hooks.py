@@ -8,19 +8,12 @@ app_license = "mit"
 
 # Ship only what you need as fixtures (theme is fine)
 fixtures = [
-    # Website Theme (already present)
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
-
-    # Workspaces you’ve curated
     {"dt": "Workspace", "filters": [["name", "in", [
-        "Zanaverse Home", "Admin"   # add others you want to preserve
+        "Zanaverse Home", "Admin", "Home"  
     ]]]},
-
-    # Optional: supporting UI elements (only if you touched them)
     {"dt": "Navbar Settings"},
     {"dt": "Website Settings"},
-
-    # Optional: dashboards/cards referenced inside your workspaces
     {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard Chart", "filters": [["module", "=", "Zanaverse Config"]]},
