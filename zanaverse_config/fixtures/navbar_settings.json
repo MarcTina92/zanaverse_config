@@ -8,7 +8,7 @@
    {
     "action": null,
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Documentation",
     "item_type": "Route",
@@ -20,7 +20,7 @@
    {
     "action": null,
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "User Forum",
     "item_type": "Route",
@@ -32,7 +32,7 @@
    {
     "action": null,
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Frappe School",
     "item_type": "Route",
@@ -44,7 +44,7 @@
    {
     "action": null,
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Report an Issue",
     "item_type": "Route",
@@ -56,7 +56,7 @@
    {
     "action": "frappe.ui.toolbar.show_about()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "About",
     "item_type": "Action",
@@ -68,7 +68,7 @@
    {
     "action": "frappe.ui.toolbar.show_shortcuts(event)",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Keyboard Shortcuts",
     "item_type": "Action",
@@ -80,7 +80,7 @@
    {
     "action": null,
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Frappe Support",
     "item_type": "Route",
@@ -90,13 +90,13 @@
     "route": "https://frappe.io/support"
    }
   ],
-  "modified": "2025-08-21 21:06:22.403673",
+  "modified": "2025-09-17 10:16:32.974858",
   "name": "Navbar Settings",
   "settings_dropdown": [
    {
     "action": null,
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "My Profile",
     "item_type": "Route",
@@ -108,7 +108,7 @@
    {
     "action": "frappe.ui.toolbar.route_to_user()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "My Settings",
     "item_type": "Action",
@@ -120,7 +120,7 @@
    {
     "action": "frappe.ui.toolbar.setup_session_defaults()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Session Defaults",
     "item_type": "Action",
@@ -132,7 +132,7 @@
    {
     "action": "frappe.ui.toolbar.clear_cache()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Reload",
     "item_type": "Action",
@@ -144,7 +144,7 @@
    {
     "action": "frappe.ui.toolbar.view_website()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "View Website",
     "item_type": "Action",
@@ -156,7 +156,7 @@
    {
     "action": null,
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Apps",
     "item_type": "Route",
@@ -168,7 +168,7 @@
    {
     "action": "frappe.ui.toolbar.toggle_full_width()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Toggle Full Width",
     "item_type": "Action",
@@ -180,7 +180,7 @@
    {
     "action": "new frappe.ui.ThemeSwitcher().show()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Toggle Theme",
     "item_type": "Action",
@@ -192,7 +192,7 @@
    {
     "action": null,
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "",
     "item_type": "Separator",
@@ -204,7 +204,7 @@
    {
     "action": "frappe.app.logout()",
     "condition": null,
-    "hidden": 0,
+    "hidden": 1,
     "is_standard": 1,
     "item_label": "Log out",
     "item_type": "Action",
