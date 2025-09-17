@@ -96,6 +96,30 @@ def _write_branding(*, force: bool) -> bool:
         frappe.db.commit()
     return changed
 
+def apply_email_footer(force=True):
+    """Set a simple global email footer."""
+    try:
+        ss = frappe.get_single("System Settings")
+    except Exception:
+        return {"changed": False, "skipped": True}
+
+    footer_html = """
+    <div style="color:#6b7280;font-size:12px;line-height:1.6;margin-top:12px">
+      <strong>Zanaverse</strong><br>
+      <a href="https://zanaverse.io" style="color:#6b7280;text-decoration:underline">zanaverse.io</a>
+    </div>
+    """.strip()
+
+    changed = False
+    if force or (not getattr(ss, "email_footer", None)):
+        if ss.email_footer != footer_html:
+            ss.email_footer = footer_html
+            changed = True
+
+    if changed:
+        ss.save(ignore_permissions=True)
+        frappe.db.commit()
+    return {"changed": changed}
 # ---------------------- public entry points ----------------------
 
 def apply_branding() -> dict:

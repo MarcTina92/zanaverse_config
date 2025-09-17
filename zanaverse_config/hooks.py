@@ -25,7 +25,12 @@ brand_html   = "zanaverse_config.brand.brand_html"
 
 # On fresh install / migrate, enforce branding (you already have these)
 after_install = "zanaverse_config.install.apply_branding_first_time"
-after_migrate = "zanaverse_config.install.apply_branding"
+
+after_migrate = [
+    "zanaverse_config.install.apply_branding",
+    "zanaverse_config.install.apply_email_footer",
+]
+
 
 # Website context + Desk boot overrides
 update_website_context = "zanaverse_config.brand.update_website_context"
