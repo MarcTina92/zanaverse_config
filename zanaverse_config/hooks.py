@@ -26,6 +26,18 @@ fixtures += [{
     ],
 }]
 
+fixtures += [{
+    "dt": "Email Template",
+    "filters": [
+        ["name", "in", [
+            "Exit Questionnaire Notification",
+            "Interview Feedback Reminder",
+            "Interview Reminder",
+            "Leave Status Notification",
+            "Leave Approval Notification",
+        ]]
+    ],
+}]
 # Dynamic branding (via helpers below)
 app_logo_url = "zanaverse_config.brand.app_logo_url"
 brand_html   = "zanaverse_config.brand.brand_html"

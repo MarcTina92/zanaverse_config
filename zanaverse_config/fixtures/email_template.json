@@ -1,0 +1,52 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Email Template",
+  "modified": "2025-08-21 21:06:38.792563",
+  "name": "Leave Approval Notification",
+  "response": "<h1>Leave Application Notification</h1>\n<h3>Details:</h3>\n\n\t<table class=\"table table-bordered small\" style=\"max-width: 500px;\">\n\t\t<tr>\n\t\t\t<td>Employee</td>\n\t\t\t<td>{{employee_name}}</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>Leave Type</td>\n\t\t\t<td>{{leave_type}}</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>From Date</td>\n\t\t\t<td>{{from_date}}</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>To Date</td>\n\t\t\t<td>{{to_date}}</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>Status</td>\n\t\t\t<td>{{status}}</td>\n\t\t</tr>\n\t</table>\n\n\t{% set doc_link = frappe.utils.get_url_to_form('Leave Application', name) %}\n\n\t<br><br>\n\t<a class=\"btn btn-primary\" href=\"{{ doc_link }}\" target=\"_blank\">{{ _('Open Now') }}</a>",
+  "response_html": null,
+  "subject": "Leave Approval Notification",
+  "use_html": 0
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Email Template",
+  "modified": "2025-08-21 21:06:38.794071",
+  "name": "Leave Status Notification",
+  "response": "<h1>Leave Application Notification</h1>\n<h3>Details:</h3>\n\n\t<table class=\"table table-bordered small\" style=\"max-width: 500px;\">\n\t\t<tr>\n\t\t\t<td>Employee</td>\n\t\t\t<td>{{employee_name}}</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>Leave Type</td>\n\t\t\t<td>{{leave_type}}</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>From Date</td>\n\t\t\t<td>{{from_date}}</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>To Date</td>\n\t\t\t<td>{{to_date}}</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>Status</td>\n\t\t\t<td>{{status}}</td>\n\t\t</tr>\n\t</table>\n\n\t{% set doc_link = frappe.utils.get_url_to_form('Leave Application', name) %}\n\n\t<br><br>\n\t<a class=\"btn btn-primary\" href=\"{{ doc_link }}\" target=\"_blank\">{{ _('Open Now') }}</a>",
+  "response_html": null,
+  "subject": "Leave Status Notification",
+  "use_html": 0
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Email Template",
+  "modified": "2025-08-21 21:06:38.795023",
+  "name": "Interview Reminder",
+  "response": "<h1>Interview Reminder</h1>\n\n<p>\n\tInterview: {{name}} is scheduled on {{scheduled_on}} from {{from_time}} to {{to_time}}\n</p>\n",
+  "response_html": null,
+  "subject": "Interview Reminder",
+  "use_html": 0
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Email Template",
+  "modified": "2025-08-21 21:06:38.795795",
+  "name": "Interview Feedback Reminder",
+  "response": "<h1>Interview Feedback Reminder</h1>\n\n<p>\n\tInterview Feedback for Interview {{ name }} is not submitted yet. Please submit your feedback. Thank you, good day!\n</p>\n",
+  "response_html": null,
+  "subject": "Interview Feedback Reminder",
+  "use_html": 0
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Email Template",
+  "modified": "2025-08-21 21:06:38.797242",
+  "name": "Exit Questionnaire Notification",
+  "response": "<h2>Exit Questionnaire</h2>\n<br>\n\n<p>\n\tDear {{ employee_name }},\n\t<br><br>\n\n\tThank you for the contribution you have made during your time at {{ company }}. We value your opinion and welcome the feedback on your experience working with us.\n\tRequest you to take out a few minutes to fill up this Exit Questionnaire.\n\n\t{% set web_form = frappe.db.get_value('HR Settings', 'HR Settings', 'exit_questionnaire_web_form') %}\n\t{% set web_form_link = frappe.utils.get_url(uri=frappe.db.get_value('Web Form', web_form, 'route')) %}\n\n\t<br><br>\n\t<a class=\"btn btn-primary\" href=\"{{ web_form_link }}\" target=\"_blank\">{{ _('Submit Now') }}</a>\n</p>\n",
+  "response_html": null,
+  "subject": "Exit Questionnaire Notification",
+  "use_html": 0
+ }
+]
