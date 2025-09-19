@@ -20,8 +20,12 @@ fixtures = [
     {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard Chart", "filters": [["module", "=", "Zanaverse Config"]]},
+        # 👇 Add these so white-labeled onboarding gets exported
+    {"dt": "Onboarding Step"},
+    {"dt": "Module Onboarding"},
+
     # Translations: grab all your EN overrides (non-contributed)
-    {"dt": "Translation", "filters": [["contributed", "=", "No"], ["language", "=", "en"]]},
+    {"dt": "Translation", "filters": [["language", "=", "en"]]},
     # Email templates you care about
     {"dt": "Email Template", "filters": [["name", "in", [
         "Exit Questionnaire Notification",
