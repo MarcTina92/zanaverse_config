@@ -1,3 +1,4 @@
+# zanaverse_config/brand.py
 import frappe
 
 BRAND_NAME   = "Zanaverse"
@@ -25,23 +26,26 @@ def _brand_html_markup(logo: str, brand: str) -> str:
 # -------------------- website context --------------------
 
 def update_website_context(context):
-    logo  = _logo_url()
-    brand = _brand_name()
-    context["app_name"]     = brand
-    context["brand_html"]   = _brand_html_markup(logo, brand)
-    context["logo"]         = logo
-    context["favicon"]      = logo
-    context["splash_image"] = logo
-    context["banner_image"] = logo
+    """
+    Must never raise. Wrap in try/except so website pages don't 500.
+    """
+    try:
+        # ensure it's dict-like
+        if not isinstance(context, dict):
+            return context
+
+        logo  = _logo_url()
+        brand = _brand_name()
+        context["app_name"]     = brand
+        context["brand_html"]   = _brand_html_markup(logo, brand)
+        context["logo"]         = logo
+        context["favicon"]      = logo
+        context["splash_image"] = logo
+        context["banner_image"] = logo
+    except Exception:
+        # absolutely never crash the request
+        pass
     return context
-
-def app_logo_url():
-    return _logo_url()
-
-def brand_html():
-    brand = _brand_name()
-    logo  = _logo_url()
-    return _brand_html_markup(logo, brand)
 
 # -------------------- app switcher renaming --------------------
 
@@ -53,30 +57,22 @@ APP_TITLE_MAP = {
 }
 
 def _rename_apps_in_bootinfo(bootinfo):
-    """
-    Rename app titles for the /apps switcher across common boot payload layouts.
-    Safe to run on any build.
-    """
     try:
-        # Case A: dict {"erpnext": {"title": "ERPNext", ...}}
         installed = bootinfo.get("installed_apps")
         if isinstance(installed, dict):
             for _, meta in installed.items():
-                if not isinstance(meta, dict):
-                    continue
-                title = meta.get("title")
-                if title in APP_TITLE_MAP:
-                    meta["title"] = APP_TITLE_MAP[title]
+                if isinstance(meta, dict):
+                    title = meta.get("title")
+                    if title in APP_TITLE_MAP:
+                        meta["title"] = APP_TITLE_MAP[title]
 
-        # Case B: list [{"name":"erpnext","title":"ERPNext"}, ...]
         apps_list = bootinfo.get("apps") or bootinfo.get("applications") or bootinfo.get("app_list")
         if isinstance(apps_list, list):
             for meta in apps_list:
-                if not isinstance(meta, dict):
-                    continue
-                title = meta.get("title")
-                if title in APP_TITLE_MAP:
-                    meta["title"] = APP_TITLE_MAP[title]
+                if isinstance(meta, dict):
+                    title = meta.get("title")
+                    if title in APP_TITLE_MAP:
+                        meta["title"] = APP_TITLE_MAP[title]
     except Exception:
         # never block boot
         pass
@@ -84,10 +80,12 @@ def _rename_apps_in_bootinfo(bootinfo):
 # -------------------- desk boot --------------------
 
 def boot_session(bootinfo):
+    """
+    Also must never raise.
+    """
     brand = _brand_name()
     logo  = _logo_url()
 
-    # Primary fields used by Desk header + titlebar
     try: bootinfo.app_name = brand
     except Exception: pass
     try: bootinfo.brand_html = _brand_html_markup(logo, brand)
@@ -113,7 +111,6 @@ def boot_session(bootinfo):
     except Exception:
         pass
 
-    # <<< important: this call must be INSIDE the function body, indented >>>
+    # keep this call *inside* the function
     _rename_apps_in_bootinfo(bootinfo)
-
     return bootinfo
