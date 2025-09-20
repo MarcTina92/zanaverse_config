@@ -778,5 +778,785 @@
   "subtitle": "Custom Field, Custom Doctype, Naming Series, Role Permission, Workflow, Print Formats, Reports",
   "success_message": "Customization onboarding is all done!",
   "title": "Customization"
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Home",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Zana Home",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Zana Home",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "Zana Home",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Purchase Manager"
+   },
+   {
+    "parent": "Zana Home",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Manufacturing Manager"
+   },
+   {
+    "parent": "Zana Home",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Item Manager"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:11:29.686661",
+  "module": "Setup",
+  "name": "Zana Home",
+  "steps": [
+   {
+    "parent": "Zana Home",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create an Item"
+   },
+   {
+    "parent": "Zana Home",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create a Customer"
+   },
+   {
+    "parent": "Zana Home",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Your First Sales Invoice"
+   }
+  ],
+  "subtitle": "Item, Customer, Supplier and Quotation",
+  "success_message": "You're ready to start your journey with ZanaERP",
+  "title": "Let's begin your journey with ZanaERP"
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Payroll",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Zana Payroll",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "HR User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:12:11.348698",
+  "module": "Payroll",
+  "name": "Zana Payroll",
+  "steps": [
+   {
+    "parent": "Zana Payroll",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Salary Component"
+   },
+   {
+    "parent": "Zana Payroll",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Payroll Period"
+   },
+   {
+    "parent": "Zana Payroll",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Income Tax Slab"
+   },
+   {
+    "parent": "Zana Payroll",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create & Assign Salary Structure"
+   },
+   {
+    "parent": "Zana Payroll",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Salary Slip"
+   },
+   {
+    "parent": "Zana Payroll",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Payroll Settings"
+   }
+  ],
+  "subtitle": "Salary, Compensation, and more.",
+  "success_message": "The Payroll Module is all set up!",
+  "title": "Let's Set Up the Payroll Module. "
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Stock",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Manufacturing Manager"
+   },
+   {
+    "parent": "Zana Stock",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Zana Stock",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Manufacturing User"
+   },
+   {
+    "parent": "Zana Stock",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Stock User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:12:40.021103",
+  "module": "Stock",
+  "name": "Zana Stock",
+  "steps": [
+   {
+    "parent": "Zana Stock",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Stock Settings"
+   },
+   {
+    "parent": "Zana Stock",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create a Warehouse"
+   },
+   {
+    "parent": "Zana Stock",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create a Stock Entry"
+   },
+   {
+    "parent": "Zana Stock",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Check Stock Ledger Report"
+   },
+   {
+    "parent": "Zana Stock",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Stock Opening Balance"
+   }
+  ],
+  "subtitle": "Inventory, Warehouses, Analysis, and more.",
+  "success_message": "The Stock Module is all set up!",
+  "title": "Let's Set Up the Stock Module."
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Accounts User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:13:13.786578",
+  "module": "Accounts",
+  "name": "Zana Accounts",
+  "steps": [
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Chart of Accounts"
+   },
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Setup Taxes"
+   },
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Accounts Settings"
+   },
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Cost Centers for Report and Budgeting"
+   },
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Your First Purchase Invoice"
+   },
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Updating Opening Balances"
+   },
+   {
+    "parent": "Zana Accounts",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Financial Statements"
+   }
+  ],
+  "subtitle": "Accounts, Invoices, Taxation, and more.",
+  "success_message": "The Accounts Module is all set up!",
+  "title": "Let's Set Up Your Accounts and Taxes."
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana CRM",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Sales Master Manager"
+   },
+   {
+    "parent": "Zana CRM",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "Zana CRM",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Sales User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:13:30.760279",
+  "module": "CRM",
+  "name": "Zana CRM",
+  "steps": [
+   {
+    "parent": "Zana CRM",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Introduction to CRM"
+   },
+   {
+    "parent": "Zana CRM",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Lead"
+   },
+   {
+    "parent": "Zana CRM",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Opportunity"
+   },
+   {
+    "parent": "Zana CRM",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create and Send Quotation"
+   },
+   {
+    "parent": "Zana CRM",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "CRM Settings"
+   }
+  ],
+  "subtitle": "Lead, Opportunity, Customer, and more.",
+  "success_message": "The CRM Module is all set up!",
+  "title": "Let's Set Up Your CRM."
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Assets",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Zana Assets",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Maintenance User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:14:03.025172",
+  "module": "Assets",
+  "name": "Zana Assets",
+  "steps": [
+   {
+    "parent": "Zana Assets",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Fixed Asset Accounts"
+   },
+   {
+    "parent": "Zana Assets",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Asset Category"
+   },
+   {
+    "parent": "Zana Assets",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Asset Item"
+   },
+   {
+    "parent": "Zana Assets",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Asset Purchase"
+   },
+   {
+    "parent": "Zana Assets",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Existing Asset"
+   }
+  ],
+  "subtitle": "Assets, Depreciations, Repairs, and more.",
+  "success_message": "The Assets Module is all set up!",
+  "title": "Let's Set Up the Assets Module."
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Customization",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "All"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:14:27.237526",
+  "module": "Custom",
+  "name": "Zana Customization",
+  "steps": [
+   {
+    "parent": "Zana Customization",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Custom Field"
+   },
+   {
+    "parent": "Zana Customization",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Custom Doctype"
+   },
+   {
+    "parent": "Zana Customization",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Naming Series"
+   },
+   {
+    "parent": "Zana Customization",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Workflows"
+   },
+   {
+    "parent": "Zana Customization",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Role Permissions"
+   },
+   {
+    "parent": "Zana Customization",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Print Format"
+   },
+   {
+    "parent": "Zana Customization",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Report Builder"
+   }
+  ],
+  "subtitle": "Custom Field, Custom Doctype, Naming Series, Role Permission, Workflow, Print Formats, Reports",
+  "success_message": "Customization onboarding is all done!",
+  "title": "Customization"
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Buying",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Purchase Manager"
+   },
+   {
+    "parent": "Zana Buying",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Zana Buying",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Zana Buying",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Stock User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:14:53.973010",
+  "module": "Buying",
+  "name": "Zana Buying",
+  "steps": [
+   {
+    "parent": "Zana Buying",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Introduction to Buying"
+   },
+   {
+    "parent": "Zana Buying",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create a Material Request"
+   },
+   {
+    "parent": "Zana Buying",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create your first Purchase Order"
+   }
+  ],
+  "subtitle": "Products, Purchases, Analysis, and more.",
+  "success_message": "The Buying Module is all set up!",
+  "title": "Let's Set Up the Buying Module."
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Selling",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "Zana Selling",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Zana Selling",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Zana Selling",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Stock User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:15:24.635297",
+  "module": "Selling",
+  "name": "Zana Selling",
+  "steps": [
+   {
+    "parent": "Zana Selling",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Selling Settings"
+   },
+   {
+    "parent": "Zana Selling",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Sales Order"
+   }
+  ],
+  "subtitle": "Products, Sales, Analysis, and more.",
+  "success_message": "The Selling Module is all set up!",
+  "title": "Let's Set Up the Selling Module."
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Manufacturing User"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Manufacturing Manager"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Item Manager"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Stock User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:15:47.168033",
+  "module": "Manufacturing",
+  "name": "Zana Manufacturing",
+  "steps": [
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Explore Manufacturing Settings"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Workstation"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Operation"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Routing"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Product"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create BOM"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Production Planning"
+   },
+   {
+    "parent": "Zana Manufacturing",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Work Order"
+   }
+  ],
+  "subtitle": "Products, Raw Materials, BOM, Work Order, and more.",
+  "success_message": "Manufacturing module is all set up!",
+  "title": "Let's Set Up the Manufacturing Module."
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "HR User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:17:06.763176",
+  "module": "HR",
+  "name": "Zana Human Resource",
+  "steps": [
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "HR Settings"
+   },
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Holiday list"
+   },
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Employee"
+   },
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Data import"
+   },
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Leave Type"
+   },
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Leave Allocation"
+   },
+   {
+    "parent": "Zana Human Resource",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Leave Application"
+   }
+  ],
+  "subtitle": "Employee, Leaves, and more.",
+  "success_message": "The Human Resource Module is all set up!",
+  "title": "Let's Set Up the Human Resource Module. "
+ },
+ {
+  "allow_roles": [
+   {
+    "parent": "Zana Website",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "Website Manager"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:17:33.769114",
+  "module": "Website",
+  "name": "Zana Website",
+  "steps": [
+   {
+    "parent": "Zana Website",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Introduction to Website"
+   },
+   {
+    "parent": "Zana Website",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Blogger"
+   },
+   {
+    "parent": "Zana Website",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Add Blog Category"
+   },
+   {
+    "parent": "Zana Website",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Enable Website Tracking"
+   },
+   {
+    "parent": "Zana Website",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Web Page Tour"
+   }
+  ],
+  "subtitle": "Blogs, Website View Tracking, and more.",
+  "success_message": "Your website is all set up!",
+  "title": "Let's Set Up Your Website."
  }
 ]
