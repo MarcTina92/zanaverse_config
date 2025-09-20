@@ -13,6 +13,84 @@ def _logo_path() -> str:
     """Single source of truth for your logo everywhere."""
     return "/assets/zanaverse_config/images/zv-logo.png?v=2"
 
+# ---------------------- onboarding preference (Zana wins) ----------------------
+
+def _is_zana(docname: str) -> bool:
+    dn = (docname or "").strip().lower()
+    return dn.startswith(("zana", "zanaverse"))
+
+def apply_onboarding_whitelabel() -> dict:
+    """
+    Prefer Zana/Zanaverse Module Onboarding over stock ones.
+    If a Zana variant exists for a module, mark all non-Zana as complete (hidden)
+    and ensure the Zana one remains incomplete (visible).
+
+    Idempotent and tolerant of schema differences across stacks.
+    """
+    if not frappe.db.table_exists("Module Onboarding"):
+        return {"skipped": True, "reason": "no Module Onboarding table"}
+
+    # Check schema: older/newer stacks may name fields slightly differently
+    meta = frappe.get_meta("Module Onboarding")
+    has_is_complete = getattr(meta, "has_field", None) and meta.has_field("is_complete")
+    if not has_is_complete:
+        # Nothing to toggle -> bail out quietly
+        return {"skipped": True, "reason": "field is_complete missing"}
+
+    rows = frappe.get_all(
+        "Module Onboarding",
+        fields=["name", "module", "title", "is_complete"],
+        order_by="module asc, modified desc",
+    )
+
+    by_module = {}
+    for r in rows:
+        by_module.setdefault(r.get("module") or "", []).append(r)
+
+    changed = False
+    toggled = {"enabled": [], "disabled": []}
+
+    for module, docs in by_module.items():
+        zana_docs = [d for d in docs if _is_zana(d.get("name") or d.get("title") or "")]
+        if not zana_docs:
+            # no preference available for this module; skip
+            continue
+
+        # choose one "preferred" Zana doc (latest in the list)
+        preferred = zana_docs[0]
+
+        # Ensure preferred is visible (incomplete = 0/False)
+        if preferred.get("is_complete"):
+            try:
+                frappe.db.set_value(
+                    "Module Onboarding", preferred["name"], "is_complete", 0, update_modified=False
+                )
+                toggled["enabled"].append(preferred["name"])
+                changed = True
+            except Exception:
+                pass
+
+        # Hide all non-Zana variants for this module
+        for d in docs:
+            if d["name"] == preferred["name"]:
+                continue
+            if not _is_zana(d.get("name") or d.get("title") or ""):
+                if not d.get("is_complete"):
+                    try:
+                        frappe.db.set_value(
+                            "Module Onboarding", d["name"], "is_complete", 1, update_modified=False
+                        )
+                        toggled["disabled"].append(d["name"])
+                        changed = True
+                    except Exception:
+                        pass
+
+    if changed:
+        frappe.db.commit()
+
+    return {"changed": changed, **toggled}
+
+
 # ---------------------- workspace tagging ----------------------
 
 # Add any baseline workspaces you always ship
