@@ -45,7 +45,6 @@ after_migrate = [
     "zanaverse_config.install.apply_branding",
     "zanaverse_config.install.apply_email_footer",
     "zanaverse_config.install.apply_onboarding_whitelabel", 
-
 ]
 
 update_website_context = "zanaverse_config.brand.update_website_context"
