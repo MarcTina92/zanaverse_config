@@ -44,7 +44,7 @@ after_install = "zanaverse_config.install.apply_branding_first_time"
 after_migrate = [
     "zanaverse_config.install.apply_branding",
     "zanaverse_config.install.apply_email_footer",
-    "zanaverse_config.install.apply_onboarding_whitelabel", # new in v1.4
+    "zanaverse_config.install.apply_onboarding_whitelabel", 
 
 ]
 
