@@ -94,7 +94,13 @@ def apply_onboarding_whitelabel() -> dict:
 # ---------------------- workspace tagging ----------------------
 
 # Add any baseline workspaces you always ship
-CURATED_WORKSPACES = ["Home", "Zanaverse Home", "Admin"]
+CURATED_WORKSPACES = [
+    "Home",
+    "Zanaverse Home",
+    "Admin",
+    "Wiki",          # add
+    "ZanaSupport",   # add (or whatever exact name you use)
+]
 
 # zanaverse_config/install.py
 def _tag_workspace_module():
@@ -137,6 +143,57 @@ def _tag_workspace_module():
     if updated:
         frappe.db.commit()
     return updated
+
+
+# ---------------------- baseline workspace visibility ----------------------
+
+# hide only the platform-y stuff; leave the rest visible for all clients
+BASELINE_HIDE = {
+    "Build", "Users", "Tools", "ERPNext Settings",
+    "ERPNext Integrations", "Welcome Workspace",
+}
+
+def apply_workspace_visibility_baseline() -> dict:
+    """
+    One-time baseline: hide a small set of platform workspaces and unhide others.
+    Idempotent (guarded by a site_config flag) and safe across schema variants.
+    """
+    if not frappe.db.table_exists("Workspace"):
+        return {"skipped": True, "reason": "no Workspace doctype"}
+
+    init_key = "zanaverse_workspace_baseline_applied"
+    conf = frappe.get_conf() or {}
+    if conf.get(init_key):
+        return {"skipped": True, "reason": "already applied"}
+
+    changed = False
+    touched = {"hidden": [], "shown": []}
+
+    for r in frappe.get_all("Workspace", fields=["name", "is_hidden"]):
+        name = r["name"]
+        try:
+            if name in BASELINE_HIDE:
+                frappe.db.set_value("Workspace", name, {"is_hidden": 1, "public": 1}, update_modified=False)
+                touched["hidden"].append(name); changed = True
+            else:
+                if r.get("is_hidden"):
+                    frappe.db.set_value("Workspace", name, {"is_hidden": 0, "public": 1}, update_modified=False)
+                    touched["shown"].append(name); changed = True
+        except Exception:
+            # ignore any odd permissions or schema mismatches
+            pass
+
+    if changed:
+        frappe.db.commit()
+
+    # mark as applied so we don't re-run on every migrate
+    try:
+        from frappe.installer import update_site_config
+        update_site_config(init_key, True)
+    except Exception:
+        frappe.conf.update({init_key: True})
+
+    return {"changed": changed, **touched}
 
 # ---------------------- branding writer ----------------------
 

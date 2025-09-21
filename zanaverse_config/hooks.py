@@ -16,13 +16,14 @@ fixtures = [
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
     {"dt": "Workspace", "filters": [["name", "in", ["Zanaverse Home", "Home"]]]},
     {"dt": "Navbar Settings"},
-    {"dt": "Website Settings"},
     {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard Chart", "filters": [["module", "=", "Zanaverse Config"]]},
         # 👇 Add these so white-labeled onboarding gets exported
-    {"dt": "Onboarding Step"},
-    {"dt": "Module Onboarding"},
+ 
+    {"dt": "Onboarding Step", "filters": [["name", "like", "Zana %"]]},
+    {"dt": "Module Onboarding", "filters": [["name", "like", "Zana %"]]},
+
 
     # Translations: grab all your EN overrides (non-contributed)
     {"dt": "Translation", "filters": [["language", "=", "en"]]},
@@ -40,7 +41,11 @@ fixtures = [
 app_logo_url = "zanaverse_config.brand.app_logo_url"
 brand_html   = "zanaverse_config.brand.brand_html"
 
-after_install = "zanaverse_config.install.apply_branding_first_time"
+
+after_install = [
+    "zanaverse_config.install.apply_branding_first_time",
+    "zanaverse_config.install.apply_workspace_visibility_baseline",  # ← add this
+]
 after_migrate = [
     "zanaverse_config.install.apply_branding",
     "zanaverse_config.install.apply_email_footer",
