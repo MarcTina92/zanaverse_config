@@ -33,19 +33,6 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-09-17 20:58:52.894704",
-  "name": "dj2gt6m0pp",
-  "source_text": "Helpdesk",
-  "translated_text": "ZanaSupport"
- },
- {
-  "context": null,
-  "contributed": 0,
-  "contribution_docname": null,
-  "contribution_status": "",
-  "docstatus": 0,
-  "doctype": "Translation",
-  "language": "en",
   "modified": "2025-09-17 20:58:52.896909",
   "name": "dj2rv0j4d8",
   "source_text": "Insights",
@@ -111,10 +98,10 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-09-18 20:25:40.430668",
+  "modified": "2025-09-21 09:04:04.909567",
   "name": "trans-helpdesk",
   "source_text": "Helpdesk",
-  "translated_text": "ZanaSupport"
+  "translated_text": "ZanaHelpdesk"
  },
  {
   "context": null,
@@ -245,5 +232,31 @@
   "name": "trans-erpnext-user-guide",
   "source_text": "ERPNext User Guide",
   "translated_text": "ZanaERP User Guide"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-09-21 10:36:16.974793",
+  "name": "hlafkl3ock",
+  "source_text": "ERPNext Settings",
+  "translated_text": "Zana Settings"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-09-21 10:36:17.167579",
+  "name": "hlb7opd8hp",
+  "source_text": "ERPNext Integrations",
+  "translated_text": "Zana Integrations"
  }
 ]
