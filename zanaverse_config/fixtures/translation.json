@@ -98,7 +98,7 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-09-21 09:04:04.909567",
+  "modified": "2025-09-21 10:46:35.673447",
   "name": "trans-helpdesk",
   "source_text": "Helpdesk",
   "translated_text": "ZanaHelpdesk"
@@ -241,7 +241,7 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-09-21 10:36:16.974793",
+  "modified": "2025-09-21 10:46:35.845499",
   "name": "hlafkl3ock",
   "source_text": "ERPNext Settings",
   "translated_text": "Zana Settings"
@@ -254,9 +254,22 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-09-21 10:36:17.167579",
+  "modified": "2025-09-21 10:46:35.848160",
   "name": "hlb7opd8hp",
   "source_text": "ERPNext Integrations",
   "translated_text": "Zana Integrations"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-09-21 10:46:35.841018",
+  "name": "nmm5vjfcs6",
+  "source_text": "Support",
+  "translated_text": "ZanaSupport"
  }
 ]
