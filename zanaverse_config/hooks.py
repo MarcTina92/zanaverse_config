@@ -13,22 +13,27 @@ web_include_js = ["assets/zanaverse_config/js/brand.js"]
 
 # === Fixtures (standardise to `dt`, remove duplicates) ===
 fixtures = [
-    {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
-    {"dt": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},
-    {"dt": "Navbar Settings"},
-    {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
-    {"dt": "Dashboard", "filters": [["module", "=", "Zanaverse Config"]]},
-    {"dt": "Dashboard Chart", "filters": [["module", "=", "Zanaverse Config"]]},
-        # 👇 Add these so white-labeled onboarding gets exported
- 
-    {"dt": "Onboarding Step", "filters": [["name", "like", "Zana %"]]},
-    {"dt": "Module Onboarding", "filters": [["name", "like", "Zana %"]]},
+    # Canonical sidebar (explicit names)
+    {
+        "doctype": "Workspace",
+        "filters": [["name", "in", [
+            "Zanaverse Home", "Home", "Admin", "Wiki", "Helpdesk", "Support",
+            "ERPNext Settings", "ERPNext Integrations",
+        ]]],
+    },
+    # Also include all workspaces in your app module (future Zana-specific pages)
+    {"doctype": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},
 
-
-    # Translations: grab all your EN overrides (non-contributed)
-    {"dt": "Translation", "filters": [["language", "=", "en"]]},
-    # Email templates you care about
-    {"dt": "Email Template", "filters": [["name", "in", [
+    # Navbar / Themes / Dashboards / Onboarding / Translations / Email Templates
+    {"doctype": "Navbar Settings"},
+    {"doctype": "Website Theme", "filters": [["name", "like", "Zana%"]]},
+    {"doctype": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
+    {"doctype": "Dashboard", "filters": [["module", "=", "Zanaverse Config"]]},
+    {"doctype": "Dashboard Chart", "filters": [["module", "=", "Zanaverse Config"]]},
+    {"doctype": "Onboarding Step", "filters": [["name", "like", "Zana %"]]},
+    {"doctype": "Module Onboarding", "filters": [["name", "like", "Zana %"]]},
+    {"doctype": "Translation", "filters": [["language", "=", "en"]]},
+    {"doctype": "Email Template", "filters": [["name", "in", [
         "Exit Questionnaire Notification",
         "Interview Feedback Reminder",
         "Interview Reminder",
@@ -36,6 +41,7 @@ fixtures = [
         "Leave Approval Notification",
     ]]]},
 ]
+
 
 # === Dynamic branding (you already had these) ===
 app_logo_url = "zanaverse_config.brand.app_logo_url"
@@ -50,6 +56,7 @@ after_migrate = [
     "zanaverse_config.install.apply_branding",
     "zanaverse_config.install.apply_email_footer",
     "zanaverse_config.install.apply_onboarding_whitelabel", 
+    "zanaverse_config.install.ensure_translation_invariants",
 ]
 
 update_website_context = "zanaverse_config.brand.update_website_context"
