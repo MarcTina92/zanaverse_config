@@ -303,6 +303,7 @@ def _upsert_translation(lang: str, src: str, dst: str):
         if getattr(doc, "translated_text", None) != dst:
             doc.translated_text = dst
             doc.save()
+        # remove dupes
         for name in rows[1:]:
             frappe.delete_doc("Translation", name)
     else:
@@ -314,36 +315,52 @@ def _upsert_translation(lang: str, src: str, dst: str):
         }).insert(ignore_permissions=True)
 
 def _set_ws(name: str, **vals):
-    """Idempotently enforce workspace visibility/order and admin roles."""
+    """Safely enforce workspace flags/order + admin role without revalidating links."""
     if not frappe.db.table_exists("Workspace") or not frappe.db.exists("Workspace", name):
         return
-    d = frappe.get_doc("Workspace", name)
-    changed = False
-    for k, v in vals.items():
-        if getattr(d, k, None) != v:
-            setattr(d, k, v)
-            changed = True
-    if name in ADMIN_WS:
-        roles = {r.role for r in (d.roles or [])}
-        if "System Manager" not in roles:
-            d.append("roles", {"role": "System Manager"})
-            changed = True
-    if changed:
-        d.save(ignore_permissions=True)
+
+    # update simple flags without full doc save (avoids link validation)
+    updatable = ("public", "is_hidden", "sequence_id")
+    for k in updatable:
+        if k in vals:
+            try:
+                frappe.db.set_value("Workspace", name, k, vals[k], update_modified=False)
+            except Exception:
+                pass  # be defensive across stack versions
+
+    # ensure System Manager role via child row insert (no parent save)
+    if name in ADMIN_WS and frappe.db.table_exists("Workspace Role"):
+        # already present?
+        if not frappe.db.exists("Workspace Role", {"parent": name, "role": "System Manager"}):
+            # insert child row directly to avoid parent validation
+            import uuid
+            frappe.db.sql("""
+                INSERT INTO `tabWorkspace Role`
+                    (name, creation, modified, owner, docstatus,
+                     parent, parenttype, parentfield, idx, role)
+                VALUES
+                    (%s, NOW(), NOW(), %s, 0,
+                     %s, 'Workspace', 'roles', 1, %s)
+            """, (str(uuid.uuid4()), "Administrator", name, "System Manager"))
+
+    # we intentionally do NOT call d.save(); commit happens in the caller
 
 def ensure_whitelabel_baseline() -> dict:
     """
     Enforce translations + canonical workspaces on every migrate.
     Safe to run repeatedly (idempotent). Keeps prod/dev/client stacks in sync.
     """
+    # 1) translations
     for (lang, src), dst in TRANSLATIONS.items():
         _upsert_translation(lang, src, dst)
 
+    # 2) workspace flags + order + roles
     for name, vals in WS_TARGETS.items():
         _set_ws(name, **vals)
 
     frappe.db.commit()
     return {"status": "ok", "translations": len(TRANSLATIONS), "workspaces": len(WS_TARGETS)}
+def ensure_translation_invariants() -> dict:
 
 # ---------------------- public entry points ----------------------
 
@@ -357,6 +374,7 @@ def apply_branding() -> dict:
     changed = _write_branding(force=locked)
     ws_updated = _tag_workspace_module()
     return {"changed": changed, "force": locked, "workspaces": ws_updated}
+
 
 def apply_branding_first_time() -> dict:
     """
@@ -374,6 +392,7 @@ def apply_branding_first_time() -> dict:
     changed = _write_branding(force=True)
     ws_updated = _tag_workspace_module()
 
+    # Persist the initialization flag in site_config.json
     try:
         from frappe.installer import update_site_config
     except Exception:
@@ -382,6 +401,7 @@ def apply_branding_first_time() -> dict:
     if update_site_config:
         update_site_config(init_key, True)
     else:
+        # Safe fallback: update in-memory conf (will persist when site config is next written)
         frappe.conf.update({init_key: True})
 
     return {"initialized": True, "changed": changed, "force": True, "workspaces": ws_updated}
