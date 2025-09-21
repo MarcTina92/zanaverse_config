@@ -270,7 +270,7 @@ def apply_email_footer(force=True):
         frappe.db.commit()
     return {"changed": changed, "skipped": False}
 
-    # ---------------------- whitelabel invariants (self-healing) ----------------------
+# ---------------------- whitelabel invariants (self-healing) ----------------------
 
 TRANSLATIONS = {
     ("en", "Helpdesk"): "ZanaHelpdesk",
