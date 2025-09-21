@@ -56,7 +56,8 @@ after_migrate = [
     "zanaverse_config.install.apply_branding",
     "zanaverse_config.install.apply_email_footer",
     "zanaverse_config.install.apply_onboarding_whitelabel", 
-    "zanaverse_config.install.ensure_translation_invariants",
+    "zanaverse_config.install.ensure_whitelabel_baseline",
+    "zanaverse_config.install.ensure_whitelabel_baseline"
 ]
 
 update_website_context = "zanaverse_config.brand.update_website_context"
