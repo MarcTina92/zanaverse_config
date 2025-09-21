@@ -30,11 +30,9 @@ def apply_onboarding_whitelabel() -> dict:
     if not frappe.db.table_exists("Module Onboarding"):
         return {"skipped": True, "reason": "no Module Onboarding table"}
 
-    # Check schema: older/newer stacks may name fields slightly differently
     meta = frappe.get_meta("Module Onboarding")
     has_is_complete = getattr(meta, "has_field", None) and meta.has_field("is_complete")
     if not has_is_complete:
-        # Nothing to toggle -> bail out quietly
         return {"skipped": True, "reason": "field is_complete missing"}
 
     rows = frappe.get_all(
@@ -53,13 +51,10 @@ def apply_onboarding_whitelabel() -> dict:
     for module, docs in by_module.items():
         zana_docs = [d for d in docs if _is_zana(d.get("name") or d.get("title") or "")]
         if not zana_docs:
-            # no preference available for this module; skip
             continue
 
-        # choose one "preferred" Zana doc (latest in the list)
         preferred = zana_docs[0]
 
-        # Ensure preferred is visible (incomplete = 0/False)
         if preferred.get("is_complete"):
             try:
                 frappe.db.set_value(
@@ -70,7 +65,6 @@ def apply_onboarding_whitelabel() -> dict:
             except Exception:
                 pass
 
-        # Hide all non-Zana variants for this module
         for d in docs:
             if d["name"] == preferred["name"]:
                 continue
@@ -90,7 +84,6 @@ def apply_onboarding_whitelabel() -> dict:
 
     return {"changed": changed, **toggled}
 
-
 # ---------------------- workspace tagging ----------------------
 
 # Add any baseline workspaces you always ship
@@ -98,11 +91,10 @@ CURATED_WORKSPACES = [
     "Home",
     "Zanaverse Home",
     "Admin",
-    "Wiki",          # add
-    "ZanaSupport",   # add (or whatever exact name you use)
+    "Wiki",
+    "Support",   # corrected from "ZanaSupport"
 ]
 
-# zanaverse_config/install.py
 def _tag_workspace_module():
     """
     Ensure curated Workspaces have module='Zanaverse Config'.
@@ -114,7 +106,6 @@ def _tag_workspace_module():
 
     try:
         meta = frappe.get_meta("Workspace")
-        # be defensive: treat as present unless we can prove otherwise
         has_module_field = True
         if getattr(meta, "has_field", None):
             has_module_field = meta.has_field("module")
@@ -129,14 +120,12 @@ def _tag_workspace_module():
             current = frappe.get_value("Workspace", name, "module")
             if current != "Zanaverse Config":
                 try:
-                    # try the clean path first
                     w = frappe.get_doc("Workspace", name)
                     w.label = w.label or name
                     w.title = w.title or w.label
                     w.module = "Zanaverse Config"
                     w.save(ignore_permissions=True)
                 except Exception:
-                    # fall back to direct write if save path rejects it
                     frappe.db.set_value("Workspace", name, "module", "Zanaverse Config", update_modified=False)
                 updated.append(name)
 
@@ -144,10 +133,8 @@ def _tag_workspace_module():
         frappe.db.commit()
     return updated
 
-
 # ---------------------- baseline workspace visibility ----------------------
 
-# hide only the platform-y stuff; leave the rest visible for all clients
 BASELINE_HIDE = {
     "Build", "Users", "Tools", "ERPNext Settings",
     "ERPNext Integrations", "Welcome Workspace",
@@ -180,13 +167,11 @@ def apply_workspace_visibility_baseline() -> dict:
                     frappe.db.set_value("Workspace", name, {"is_hidden": 0, "public": 1}, update_modified=False)
                     touched["shown"].append(name); changed = True
         except Exception:
-            # ignore any odd permissions or schema mismatches
             pass
 
     if changed:
         frappe.db.commit()
 
-    # mark as applied so we don't re-run on every migrate
     try:
         from frappe.installer import update_site_config
         update_site_config(init_key, True)
@@ -218,7 +203,6 @@ def _write_branding(*, force: bool) -> bool:
     logo = _logo_path()
     brand_html = f'<img src="{logo}" alt="Zanaverse" style="height:22px;vertical-align:middle">'
 
-    # Only branding-related fields (tight, predictable)
     _set("app_logo", logo)
     _set("footer_logo", logo)
     _set("favicon", logo)
@@ -238,7 +222,6 @@ def apply_email_footer(force=True):
     except Exception:
         return {"changed": False, "skipped": True, "reason": "no System Settings meta"}
 
-    # older/newer stacks may not have this field
     has_field = getattr(meta, "has_field", None)
     if has_field and not meta.has_field("email_footer"):
         return {"changed": False, "skipped": True, "reason": "email_footer field missing"}
@@ -303,7 +286,6 @@ def _upsert_translation(lang: str, src: str, dst: str):
         if getattr(doc, "translated_text", None) != dst:
             doc.translated_text = dst
             doc.save()
-        # remove dupes
         for name in rows[1:]:
             frappe.delete_doc("Translation", name)
     else:
@@ -326,13 +308,11 @@ def _set_ws(name: str, **vals):
             try:
                 frappe.db.set_value("Workspace", name, k, vals[k], update_modified=False)
             except Exception:
-                pass  # be defensive across stack versions
+                pass
 
     # ensure System Manager role via child row insert (no parent save)
     if name in ADMIN_WS and frappe.db.table_exists("Workspace Role"):
-        # already present?
         if not frappe.db.exists("Workspace Role", {"parent": name, "role": "System Manager"}):
-            # insert child row directly to avoid parent validation
             import uuid
             frappe.db.sql("""
                 INSERT INTO `tabWorkspace Role`
@@ -343,24 +323,19 @@ def _set_ws(name: str, **vals):
                      %s, 'Workspace', 'roles', 1, %s)
             """, (str(uuid.uuid4()), "Administrator", name, "System Manager"))
 
-    # we intentionally do NOT call d.save(); commit happens in the caller
-
 def ensure_whitelabel_baseline() -> dict:
     """
     Enforce translations + canonical workspaces on every migrate.
     Safe to run repeatedly (idempotent). Keeps prod/dev/client stacks in sync.
     """
-    # 1) translations
     for (lang, src), dst in TRANSLATIONS.items():
         _upsert_translation(lang, src, dst)
 
-    # 2) workspace flags + order + roles
     for name, vals in WS_TARGETS.items():
         _set_ws(name, **vals)
 
     frappe.db.commit()
     return {"status": "ok", "translations": len(TRANSLATIONS), "workspaces": len(WS_TARGETS)}
-def ensure_translation_invariants() -> dict:
 
 # ---------------------- public entry points ----------------------
 
@@ -374,7 +349,6 @@ def apply_branding() -> dict:
     changed = _write_branding(force=locked)
     ws_updated = _tag_workspace_module()
     return {"changed": changed, "force": locked, "workspaces": ws_updated}
-
 
 def apply_branding_first_time() -> dict:
     """
@@ -392,7 +366,6 @@ def apply_branding_first_time() -> dict:
     changed = _write_branding(force=True)
     ws_updated = _tag_workspace_module()
 
-    # Persist the initialization flag in site_config.json
     try:
         from frappe.installer import update_site_config
     except Exception:
@@ -401,7 +374,6 @@ def apply_branding_first_time() -> dict:
     if update_site_config:
         update_site_config(init_key, True)
     else:
-        # Safe fallback: update in-memory conf (will persist when site config is next written)
         frappe.conf.update({init_key: True})
 
     return {"initialized": True, "changed": changed, "force": True, "workspaces": ws_updated}
