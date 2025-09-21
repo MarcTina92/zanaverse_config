@@ -14,7 +14,7 @@ web_include_js = ["assets/zanaverse_config/js/brand.js"]
 # === Fixtures (standardise to `dt`, remove duplicates) ===
 fixtures = [
     {"dt": "Website Theme", "filters": [["name", "like", "Zana%"]]},
-    {"dt": "Workspace", "filters": [["name", "in", ["Zanaverse Home", "Home"]]]},
+    {"dt": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Navbar Settings"},
     {"dt": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
     {"dt": "Dashboard", "filters": [["module", "=", "Zanaverse Config"]]},
