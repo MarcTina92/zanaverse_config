@@ -114,3 +114,44 @@ def boot_session(bootinfo):
     # keep this call *inside* the function
     _rename_apps_in_bootinfo(bootinfo)
     return bootinfo
+
+# -------------------- shims required by hooks --------------------
+
+def app_logo_url():
+    # used by hooks.py -> app_logo_url
+    return _logo_url()
+
+def brand_html():
+    # used by hooks.py -> brand_html
+    return _brand_html_markup(_logo_url(), _brand_name())
+
+
+# -------------------- global email footer enforcement --------------------
+
+ZANAVERSE_FOOTER = "— Sent via Zanaverse ERP"
+
+def _get_current_footer() -> str:
+    try:
+        return frappe.db.get_single_value("System Settings", "email_footer_address") or ""
+    except Exception:
+        return ""
+
+def _set_footer(value: str):
+    frappe.db.set_single_value("System Settings", "email_footer_address", value)
+    frappe.db.commit()
+
+def set_global_footer():
+    """One-time set on install (new sites)."""
+    try:
+        if _get_current_footer() != ZANAVERSE_FOOTER:
+            _set_footer(ZANAVERSE_FOOTER)
+    except Exception:
+        frappe.log_error(frappe.get_traceback(), "Zanaverse: set_global_footer failed")
+
+def enforce_global_footer():
+    """Self-heal: ensure footer remains Zanaverse (runs after migrate + daily)."""
+    try:
+        if _get_current_footer() != ZANAVERSE_FOOTER:
+            _set_footer(ZANAVERSE_FOOTER)
+    except Exception:
+        frappe.log_error(frappe.get_traceback(), "Zanaverse: enforce_global_footer failed")

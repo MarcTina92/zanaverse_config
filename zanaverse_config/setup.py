@@ -1,14 +1,13 @@
 import frappe
 
-def set_default_email_footer():
-    """Ensure a global default footer so mails don't show 'Sent via ERPNext'."""
+def set_default_footer():
+    """Set default email footer so new sites don't show 'Sent via ERPNext'."""
     try:
         frappe.db.set_single_value(
             "System Settings",
-            "default_outgoing_footer",
-            "— Sent via Zanaverse ERP",
+            "email_footer_address",
+            "— Sent via Zanaverse ERP"
         )
-        frappe.clear_cache()
-    except Exception:
-        frappe.log_error("Failed to set System Settings.default_outgoing_footer",
-                         "zanaverse_config: set_default_email_footer")
+        frappe.db.commit()
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "Zanaverse: set_default_footer failed")

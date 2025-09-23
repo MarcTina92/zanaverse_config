@@ -297,31 +297,18 @@ def _upsert_translation(lang: str, src: str, dst: str):
         }).insert(ignore_permissions=True)
 
 def _set_ws(name: str, **vals):
-    """Safely enforce workspace flags/order + admin role without revalidating links."""
+    """Safely enforce workspace flags/order without revalidating links."""
     if not frappe.db.table_exists("Workspace") or not frappe.db.exists("Workspace", name):
         return
 
-    # update simple flags without full doc save (avoids link validation)
-    updatable = ("public", "is_hidden", "sequence_id")
-    for k in updatable:
+    for k in ("public", "is_hidden", "sequence_id"):
         if k in vals:
             try:
                 frappe.db.set_value("Workspace", name, k, vals[k], update_modified=False)
             except Exception:
-                pass
+                pass  # tolerate schema quirks
 
-    # ensure System Manager role via child row insert (no parent save)
-    if name in ADMIN_WS and frappe.db.table_exists("Workspace Role"):
-        if not frappe.db.exists("Workspace Role", {"parent": name, "role": "System Manager"}):
-            import uuid
-            frappe.db.sql("""
-                INSERT INTO `tabWorkspace Role`
-                    (name, creation, modified, owner, docstatus,
-                     parent, parenttype, parentfield, idx, role)
-                VALUES
-                    (%s, NOW(), NOW(), %s, 0,
-                     %s, 'Workspace', 'roles', 1, %s)
-            """, (str(uuid.uuid4()), "Administrator", name, "System Manager"))
+    # intentionally no role writes here; keep invariants minimal
 
 def ensure_whitelabel_baseline() -> dict:
     """

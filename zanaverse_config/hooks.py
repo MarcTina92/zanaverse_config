@@ -1,3 +1,4 @@
+# zanaverse_config/hooks.py
 # -*- coding: utf-8 -*-
 app_name = "zanaverse_config"
 app_title = "Zanaverse"
@@ -7,13 +8,13 @@ app_email = "info@marctinaconsultancy.com"
 app_license = "mit"
 
 # === Include your brand assets on Desk & Website ===
+# Ensure these files actually exist in your built assets; otherwise comment them out.
 app_include_js = ["assets/zanaverse_config/js/brand.js"]
 web_include_js = ["assets/zanaverse_config/js/brand.js"]
-#app_include_css = ["assets/zanaverse_config/css/brand.css"]
+# app_include_css = ["assets/zanaverse_config/css/brand.css"]
 
-# === Fixtures (standardise to `dt`, remove duplicates) ===
+# === Fixtures ===
 fixtures = [
-    # Canonical sidebar (explicit names)
     {
         "doctype": "Workspace",
         "filters": [["name", "in", [
@@ -21,10 +22,7 @@ fixtures = [
             "ERPNext Settings", "ERPNext Integrations",
         ]]],
     },
-    # Also include all workspaces in your app module (future Zana-specific pages)
     {"doctype": "Workspace", "filters": [["module", "=", "Zanaverse Config"]]},
-
-    # Navbar / Themes / Dashboards / Onboarding / Translations / Email Templates
     {"doctype": "Navbar Settings"},
     {"doctype": "Website Theme", "filters": [["name", "like", "Zana%"]]},
     {"doctype": "Number Card", "filters": [["module", "=", "Zanaverse Config"]]},
@@ -42,29 +40,33 @@ fixtures = [
     ]]]},
 ]
 
-
-# === Dynamic branding (you already had these) ===
+# === Dynamic branding: these must point to real callables ===
 app_logo_url = "zanaverse_config.brand.app_logo_url"
 brand_html   = "zanaverse_config.brand.brand_html"
 
-
+# === Hooks ===
 after_install = [
     "zanaverse_config.install.apply_branding_first_time",
-    "zanaverse_config.install.apply_workspace_visibility_baseline",  # ← add this
+    "zanaverse_config.install.apply_workspace_visibility_baseline",
+    "zanaverse_config.brand.set_global_footer",          # <-- use brand.py
 ]
 after_migrate = [
     "zanaverse_config.install.apply_branding",
     "zanaverse_config.install.apply_email_footer",
-    "zanaverse_config.install.apply_onboarding_whitelabel", 
+    "zanaverse_config.install.apply_onboarding_whitelabel",
     "zanaverse_config.install.ensure_whitelabel_baseline",
+    "zanaverse_config.brand.enforce_global_footer",      # <-- use brand.py
 ]
 
 update_website_context = "zanaverse_config.brand.update_website_context"
 boot_session = "zanaverse_config.brand.boot_session"
 
-# Fallbacks while dynamic hooks run
 website_context = {
     "brand_html": "Zanaverse",
     "favicon": "/assets/zanaverse_config/favicon.png",
     "splash_image": "/assets/zanaverse_config/logo.svg",
+}
+
+scheduler_events = {
+    "daily": ["zanaverse_config.brand.enforce_global_footer"]  # <-- use brand.py
 }
