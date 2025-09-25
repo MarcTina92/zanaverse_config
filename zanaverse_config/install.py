@@ -215,44 +215,6 @@ def _write_branding(*, force: bool) -> bool:
         frappe.db.commit()
     return changed
 
-def apply_email_footer(force=True):
-    """Set a simple global email footer, but only on stacks that support it."""
-    try:
-        meta = frappe.get_meta("System Settings")
-    except Exception:
-        return {"changed": False, "skipped": True, "reason": "no System Settings meta"}
-
-    has_field = getattr(meta, "has_field", None)
-    if has_field and not meta.has_field("email_footer"):
-        return {"changed": False, "skipped": True, "reason": "email_footer field missing"}
-
-    try:
-        ss = frappe.get_single("System Settings")
-    except Exception:
-        return {"changed": False, "skipped": True, "reason": "cannot load System Settings"}
-
-    if not hasattr(ss, "email_footer"):
-        return {"changed": False, "skipped": True, "reason": "email_footer attr missing"}
-
-    footer_html = """
-    <div style="color:#6b7280;font-size:12px;line-height:1.6;margin-top:12px">
-      <strong>Zanaverse</strong><br>
-      <a href="https://zanaverse.io" style="color:#6b7280;text-decoration:underline">zanaverse.io</a>
-    </div>
-    """.strip()
-
-    changed = False
-    current = getattr(ss, "email_footer", None)
-    if force or not current:
-        if current != footer_html:
-            ss.email_footer = footer_html
-            changed = True
-
-    if changed:
-        ss.save(ignore_permissions=True)
-        frappe.db.commit()
-    return {"changed": changed, "skipped": False}
-
 # ---------------------- whitelabel invariants (self-healing) ----------------------
 
 TRANSLATIONS = {
@@ -364,3 +326,31 @@ def apply_branding_first_time() -> dict:
         frappe.conf.update({init_key: True})
 
     return {"initialized": True, "changed": changed, "force": True, "workspaces": ws_updated}
+
+# ---------------------- email footer enforcement ----------------------
+
+def apply_email_footer():
+    """Ensure Zanaverse branding shows in all outgoing emails and ERPNext footer is disabled."""
+    try:
+        ss = frappe.get_single("System Settings")
+    except Exception:
+        return {"changed": False, "skipped": True, "reason": "cannot load System Settings"}
+
+    changed = False
+
+    # Disable ERPNext default footer
+    if getattr(ss, "disable_standard_email_footer", None) != 1:
+        ss.disable_standard_email_footer = 1
+        changed = True
+
+    # Keep web view link (optional: remove if you don't want “View in browser”)
+    if getattr(ss, "include_web_view_link_in_email", None) != 1:
+        ss.include_web_view_link_in_email = 1
+        changed = True
+
+    if changed:
+        ss.save(ignore_permissions=True)
+        frappe.db.commit()
+
+    return {"changed": changed, "skipped": False}
+
