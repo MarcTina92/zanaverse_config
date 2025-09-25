@@ -2,6 +2,76 @@
  {
   "allow_roles": [
    {
+    "parent": "Zana HR",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Zana HR",
+    "parentfield": "allow_roles",
+    "parenttype": "Module Onboarding",
+    "role": "HR User"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Module Onboarding",
+  "documentation_url": "https://docs.zanaverse.com",
+  "is_complete": 0,
+  "modified": "2025-09-20 11:16:08.739086",
+  "module": "HR",
+  "name": "Zana HR",
+  "steps": [
+   {
+    "parent": "Zana HR",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "HR Settings"
+   },
+   {
+    "parent": "Zana HR",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Holiday list"
+   },
+   {
+    "parent": "Zana HR",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Employee"
+   },
+   {
+    "parent": "Zana HR",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Data import"
+   },
+   {
+    "parent": "Zana HR",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Leave Type"
+   },
+   {
+    "parent": "Zana HR",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Leave Allocation"
+   },
+   {
+    "parent": "Zana HR",
+    "parentfield": "steps",
+    "parenttype": "Module Onboarding",
+    "step": "Create Leave Application"
+   }
+  ],
+  "subtitle": "Employee, Leaves, and more.",
+  "success_message": "The Human Resource Module is all set up!",
+  "title": "Let's Set Up the Human Resource Module. "
+ },
+ {
+  "allow_roles": [
+   {
     "parent": "Zana Home",
     "parentfield": "allow_roles",
     "parenttype": "Module Onboarding",

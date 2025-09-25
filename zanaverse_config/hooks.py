@@ -37,6 +37,7 @@ fixtures = [
         "Interview Reminder",
         "Leave Status Notification",
         "Leave Approval Notification",
+        "Welcome - Zanaverse (Default)", 
     ]]]},
 ]
 
