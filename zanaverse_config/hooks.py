@@ -50,6 +50,7 @@ after_install = [
     "zanaverse_config.install.apply_branding_first_time",
     "zanaverse_config.install.apply_workspace_visibility_baseline",
     "zanaverse_config.brand.set_global_footer",          # <-- use brand.py
+    "zanaverse_config.install.apply_welcome_template",          # ← add
 ]
 after_migrate = [
     "zanaverse_config.install.apply_branding",
@@ -57,6 +58,8 @@ after_migrate = [
     "zanaverse_config.install.apply_onboarding_whitelabel",
     "zanaverse_config.install.ensure_whitelabel_baseline",
     "zanaverse_config.brand.enforce_global_footer",      # <-- use brand.py
+    "zanaverse_config.install.apply_welcome_template",          # ← add
+
 ]
 
 update_website_context = "zanaverse_config.brand.update_website_context"

@@ -338,13 +338,13 @@ def apply_email_footer():
 
     changed = False
 
-    # Disable ERPNext default footer
+    # Always disable ERPNext default footer
     if getattr(ss, "disable_standard_email_footer", None) != 1:
         ss.disable_standard_email_footer = 1
         changed = True
 
-    # Keep web view link (optional: remove if you don't want “View in browser”)
-    if getattr(ss, "include_web_view_link_in_email", None) != 1:
+    # Enable "View in browser" link if field exists
+    if hasattr(ss, "include_web_view_link_in_email") and ss.include_web_view_link_in_email != 1:
         ss.include_web_view_link_in_email = 1
         changed = True
 
@@ -354,3 +354,26 @@ def apply_email_footer():
 
     return {"changed": changed, "skipped": False}
 
+
+def apply_welcome_template():
+    """Ensure our custom welcome email template is selected site-wide."""
+    TEMPLATE = "Welcome - Zanaverse (Default)"
+    try:
+        # make sure the template exists (via fixtures) before setting it
+        if not frappe.db.exists("Email Template", TEMPLATE):
+            return {"changed": False, "skipped": True, "reason": "email template not installed"}
+
+        ss = frappe.get_single("System Settings")
+        # some stacks may not have this field (very old), so guard access
+        if not hasattr(ss, "welcome_email_template"):
+            return {"changed": False, "skipped": True, "reason": "welcome_email_template field missing"}
+
+        if ss.welcome_email_template != TEMPLATE:
+            ss.welcome_email_template = TEMPLATE
+            ss.save(ignore_permissions=True)
+            frappe.db.commit()
+            return {"changed": True, "template": TEMPLATE}
+
+        return {"changed": False, "template": TEMPLATE}
+    except Exception as e:
+        return {"changed": False, "error": str(e)}
