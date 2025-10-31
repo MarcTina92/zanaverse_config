@@ -271,5 +271,31 @@
   "name": "nmm5vjfcs6",
   "source_text": "Support",
   "translated_text": "ZanaSupport"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-10-31 17:08:03.923238",
+  "name": "gc8de4c4gt",
+  "source_text": "Frappe CRM",
+  "translated_text": "Zanaverse Sales"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-10-31 17:08:04.047088",
+  "name": "gc8abtpr8d",
+  "source_text": "CRM Portal Page",
+  "translated_text": "Sales Portal"
  }
 ]
