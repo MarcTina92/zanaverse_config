@@ -50,6 +50,7 @@ after_install = [
     "zanaverse_config.install.apply_branding_first_time",
     "zanaverse_config.install.apply_workspace_visibility_baseline",
     "zanaverse_config.brand.set_global_footer",          # <-- use brand.py
+    "zanaverse_config.brand.apply_crm_brand", 
     "zanaverse_config.install.apply_welcome_template",          # ← add
 ]
 after_migrate = [
@@ -58,6 +59,7 @@ after_migrate = [
     "zanaverse_config.install.apply_onboarding_whitelabel",
     "zanaverse_config.install.ensure_whitelabel_baseline",
     "zanaverse_config.brand.enforce_global_footer",      # <-- use brand.py
+    "zanaverse_config.brand.apply_crm_brand", 
     "zanaverse_config.install.apply_welcome_template",          # ← add
 
 ]
@@ -72,5 +74,6 @@ website_context = {
 }
 
 scheduler_events = {
-    "daily": ["zanaverse_config.brand.enforce_global_footer"]  # <-- use brand.py
+    "daily": ["zanaverse_config.brand.enforce_global_footer",  # <-- use brand.py
+    "zanaverse_config.brand.apply_crm_brand",] 
 }

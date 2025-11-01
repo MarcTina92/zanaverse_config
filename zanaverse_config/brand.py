@@ -54,6 +54,8 @@ APP_TITLE_MAP = {
     "Frappe HR": "ZanaHR",
     "Helpdesk":  "ZanaSupport",
     "Insights":  "Zanalytics",
+    "Frappe CRM": "ZanaCRM", # <- new
+    "CRM":        "ZanaCRM"  # <- new
 }
 
 def _rename_apps_in_bootinfo(bootinfo):
@@ -155,3 +157,47 @@ def enforce_global_footer():
             _set_footer(ZANAVERSE_FOOTER)
     except Exception:
         frappe.log_error(frappe.get_traceback(), "Zanaverse: enforce_global_footer failed")
+
+# -------------------- CRM branding (translations) --------------------
+
+def _crm_brand_name() -> str:
+    # per-site override (optional) -> site_config.json: {"crm_brand_name": "AcmeCRM"}
+    try:
+        return (frappe.get_site_config() or {}).get("crm_brand_name") or "ZanaCRM"
+    except Exception:
+        return "ZanaCRM"
+
+def _upsert_translation(src: str, dst: str, lang: str = "en"):
+    name = frappe.db.get_value("Translation", {"language": lang, "source_text": src})
+    if name:
+        doc = frappe.get_doc("Translation", name)
+        if doc.translated_text != dst:
+            doc.translated_text = dst
+            doc.save(ignore_permissions=True)
+    else:
+        frappe.get_doc({
+            "doctype": "Translation",
+            "language": lang,
+            "source_text": src,
+            "translated_text": dst,
+        }).insert(ignore_permissions=True)
+    frappe.db.commit()
+
+def apply_crm_brand(lang_codes=None):
+    """
+    Idempotent. Ensures 'Frappe CRM' strings show your brand (default 'ZanaCRM').
+    Run on after_migrate and can be run manually on any site.
+    """
+    langs = lang_codes or ["en", "en-GB"]
+    brand = _crm_brand_name()
+    strings = {
+        "Welcome to Frappe CRM": f"Welcome to {brand}",
+        "Frappe CRM": brand,   # catches other spots including tiles/tooltips
+    }
+    for lang in langs:
+        for src, dst in strings.items():
+            _upsert_translation(src, dst, lang)
+    try:
+        frappe.clear_cache()
+    except Exception:
+        pass
