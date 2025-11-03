@@ -160,10 +160,12 @@ def enforce_global_footer():
 
 # -------------------- CRM branding (translations) --------------------
 
+
 def _crm_brand_name() -> str:
-    # per-site override (optional) -> site_config.json: {"crm_brand_name": "AcmeCRM"}
-    try:
-        return (frappe.get_site_config() or {}).get("crm_brand_name") or "ZanaCRM"
+    try: 
+        sc = frappe.get_site_config() or {}
+        label = sc.get("crm_brand_name") or sc.get("brand_label") or "ZanaCRM"
+        return str(label).strip() or "ZanaCRM"
     except Exception:
         return "ZanaCRM"
 
