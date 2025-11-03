@@ -161,13 +161,11 @@ def enforce_global_footer():
 # -------------------- CRM branding (translations) --------------------
 
 
+# zanaverse_config/brand.py
+
 def _crm_brand_name() -> str:
-    try: 
-        sc = frappe.get_site_config() or {}
-        label = sc.get("crm_brand_name") or sc.get("brand_label") or "ZanaCRM"
-        return str(label).strip() or "ZanaCRM"
-    except Exception:
-        return "ZanaCRM"
+    # Always use product brand across all client sites
+    return "ZanaCRM"
 
 def _upsert_translation(src: str, dst: str, lang: str = "en"):
     name = frappe.db.get_value("Translation", {"language": lang, "source_text": src})
