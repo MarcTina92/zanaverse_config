@@ -288,16 +288,61 @@ def ensure_whitelabel_baseline() -> dict:
 
 # ---------------------- public entry points ----------------------
 
+def _apply_system_settings_branding(force: bool = False) -> bool:
+    """
+    Ensure System Settings carries Zanaverse branding.
+
+    - app_name controls "Login to <app_name>" text
+    - app_logo appears on the login screen
+
+    Idempotent and safe: only overwrites generic values unless force=True.
+    """
+    try:
+        ss = frappe.get_single("System Settings")
+    except Exception:
+        return False  # nothing to do if System Settings isn't ready
+
+    changed = False
+
+    # App name shown on login screen
+    if force or not ss.app_name or ss.app_name.strip().lower() in {"frappe", "erpnext"}:
+        ss.app_name = "Zanaverse"
+        changed = True
+
+    # App logo used on login screen in many themes
+    logo = _logo_path()
+    current_logo = getattr(ss, "app_logo", None)
+    if force or not current_logo or current_logo != logo:
+        ss.app_logo = logo
+        changed = True
+
+    if changed:
+        ss.save(ignore_permissions=True)
+        frappe.db.commit()
+
+    return changed
+
+
 def apply_branding() -> dict:
     """
     Run on migrate (and manually). Enforce when locked; otherwise only seed empties.
     Also auto-tags curated Workspaces with module='Zanaverse Config' so
-    your module-based fixtures pick them up.
+    your module-based fixtures pick them up, and ensures System Settings
+    uses Zanaverse branding instead of stock Frappe.
     """
     locked = asbool((frappe.get_conf() or {}).get("zanaverse_branding_locked", True))
-    changed = _write_branding(force=locked)
+
+    website_changed = _write_branding(force=locked)
+    system_changed = _apply_system_settings_branding(force=locked)
     ws_updated = _tag_workspace_module()
-    return {"changed": changed, "force": locked, "workspaces": ws_updated}
+
+    return {
+        "website_changed": website_changed,
+        "system_settings_changed": system_changed,
+        "force": locked,
+        "workspaces": ws_updated,
+    }
+
 
 def apply_branding_first_time() -> dict:
     """
@@ -310,9 +355,15 @@ def apply_branding_first_time() -> dict:
 
     if asbool(conf.get(init_key)):
         ws_updated = _tag_workspace_module()
-        return {"initialized": False, "changed": False, "force": False, "workspaces": ws_updated}
+        return {
+            "initialized": False,
+            "changed": False,
+            "force": False,
+            "workspaces": ws_updated,
+        }
 
-    changed = _write_branding(force=True)
+    website_changed = _write_branding(force=True)
+    system_changed = _apply_system_settings_branding(force=True)
     ws_updated = _tag_workspace_module()
 
     try:
@@ -325,7 +376,14 @@ def apply_branding_first_time() -> dict:
     else:
         frappe.conf.update({init_key: True})
 
-    return {"initialized": True, "changed": changed, "force": True, "workspaces": ws_updated}
+    return {
+        "initialized": True,
+        "website_changed": website_changed,
+        "system_settings_changed": system_changed,
+        "force": True,
+        "workspaces": ws_updated,
+    }
+
 
 # ---------------------- email footer enforcement ----------------------
 
