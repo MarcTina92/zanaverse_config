@@ -1,0 +1,10 @@
+/* Hide CRM “Getting started” everywhere, including teleported drawers */
+[data-testid="getting-started"],
+[data-testid="onboarding"],
+.onboarding-sheet,
+.onboarding-drawer,
+.onboarding-card,
+#onboarding,
+div[class*="onboarding"][role="dialog"] {
+  display: none !important;
+}

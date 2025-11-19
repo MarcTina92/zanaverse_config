@@ -9,7 +9,9 @@ app_license = "mit"
 
 # === Include your brand assets on Desk & Website ===
 # Ensure these files actually exist in your built assets; otherwise comment them out.
-app_include_js = ["assets/zanaverse_config/js/brand.js"]
+app_include_js = ["assets/zanaverse_config/js/brand.js",    
+ "assets/zanaverse_config/js/crm_kill_onboarding.js",
+]
 web_include_js = ["assets/zanaverse_config/js/brand.js"]
 # app_include_css = ["assets/zanaverse_config/css/brand.css"]
 
